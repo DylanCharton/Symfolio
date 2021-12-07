@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PortfolioController!{% endblock %}
+
+{% block body %}
+    <section class="projets">
+    {% for projet in projets %}
+         <div>
+            <h2>{{projet.title}}</h2>
+            <div class="metadata">Projet effectué entre le 06/12/2021 et le 13/12/2021</div>
+            <a href="{{projet.weblink}}">Lien du projet</a>
+            <div class="content">
+            <img src="http://placehold.it/350x150" alt="Illustration">
+            {{ projet.description | raw }}
+            <a href="{{ path( 'portfolio_show', {'id': projet.id} )}}" class="btn btn-primary">Voir la suite</a>
+            </div>
+        </div>
+    {% endfor %}
+       
+        
+
+    </section>
+{% endblock %}
