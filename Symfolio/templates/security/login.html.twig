@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Connexion à l'interface d'administration</h1>
+
+    {% form_start(form) %}
+     {{ form_row(form.username, {'label':"Nom d'utilisateur", 'attr' : {'placeholder':"Nom d'utilisateur..."}}) }}
+    {{ form_row(form.password, {'label':"Mot de passe",'attr' : {'placeholder':"Mot de passe..."}}) }}
+
+    {% form_end(form) %}
+{% endblock %}

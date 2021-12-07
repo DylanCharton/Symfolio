@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProjectRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
@@ -19,26 +20,40 @@ class Project
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=10, max=255)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=10, 
+     * minMessage = "Le titre doit faire au moins 10 caractères"
+     *  )
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     * message = "L'URL saisie est invalide",
+     * relativeProtocol = true)
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     * message = "L'URL saisie est invalide",
+     * relativeProtocol = true
+     * )
      */
     private $github;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(
+     * message = "L'URL saisie est invalide",
+     * relativeProtocol = true)
      */
     private $weblink;
 

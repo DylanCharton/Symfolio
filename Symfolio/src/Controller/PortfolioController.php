@@ -6,7 +6,10 @@ use App\Entity\Project;
 use App\Repository\ProjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\ProjectType;
 
 class PortfolioController extends AbstractController
 {
@@ -28,6 +31,44 @@ class PortfolioController extends AbstractController
     public function home(){
         return $this->render('portfolio/home.html.twig');
     }
+
+    /** 
+    *@Route("/portfolio/new", name="portfolio_create")
+    *@Route("/portfolio/{id}/edit", name="portfolio_edit")
+    */
+    public function form(Project $project = null, Request $request, ManagerRegistry $doctrine){
+        $manager = $doctrine->getManager();
+        
+        if(!$project){
+            $project = new Project();
+
+        }
+
+        // $form = $this->createFormBuilder($project)
+        //              ->add('title')
+        //              ->add('description')
+        //              ->add('image')
+        //              ->add('github')
+        //              ->add('weblink')
+                     
+        //              ->getForm();
+        
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            $manager->persist($project);
+            $manager->flush();
+
+            return $this->redirectToRoute('portfolio_show', ['id' => $project->getId()]);
+        }
+        return $this->render('portfolio/create.html.twig',[
+            'formProject' => $form->createView(),
+            'editMode'    => $project->getId() !== null
+        ]);
+    }
+
     /**
      * @Route("/portfolio/{id}", name="portfolio_show")
      */
@@ -35,7 +76,10 @@ class PortfolioController extends AbstractController
         
         
         return $this->render("portfolio/show.html.twig",[
-            'projet' => $projet
+            'projet'   => $projet,
+            
         ]);
     }
+    
+    
 }

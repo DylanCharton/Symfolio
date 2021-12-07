@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdminRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AdminRepository::class)
  */
-class Admin
+class Admin implements UserInterface
 {
     /**
      * @ORM\Id
@@ -24,13 +27,17 @@ class Admin
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, max=16, minMessage="Votre message doit faire au moins 8 caractères", maxMessage="Votre message ne peut dépasser 16 caractères")
      */
     private $password;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @Assert\EqualTo(propertyPath="password", message="Le mot de passe n'est pas identique à sa vérification")
      */
     private $created_at;
+
+    public $confirm_password;
 
     public function getId(): ?int
     {
@@ -71,5 +78,19 @@ class Admin
         $this->created_at = $created_at;
 
         return $this;
+    }
+
+    public function eraseCredentials()
+    {
+        
+    }
+
+    public function getSalt()
+    {
+        
+    }
+
+    public function getRoles(){
+        return ['ROLE_ADMIN'];
     }
 }
