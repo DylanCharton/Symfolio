@@ -3,9 +3,15 @@
 {% block body %}
     <h1>Connexion à l'interface d'administration</h1>
 
-    {% form_start(form) %}
-     {{ form_row(form.username, {'label':"Nom d'utilisateur", 'attr' : {'placeholder':"Nom d'utilisateur..."}}) }}
-    {{ form_row(form.password, {'label':"Mot de passe",'attr' : {'placeholder':"Mot de passe..."}}) }}
-
-    {% form_end(form) %}
+    <form action="{{path('security_login')}}" method="POST">
+        <div class="form-group">
+            <input type="text" placeholder="Adresse mail..." required name="_username">
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Mot de passe..." required name="_password">
+        </div>
+        <div class="form-groupe">
+            <input type="submit" class="btn btn-success" value="Connexion">
+        </div>
+    </form>
 {% endblock %}

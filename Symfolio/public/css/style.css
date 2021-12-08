@@ -2,6 +2,11 @@ body {
     background-repeat: no-repeat;
 }
 
+.container{
+    margin-top : 7rem;
+
+}
+
 /* .size-input{
     width : 20rem;
 } */

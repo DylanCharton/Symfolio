@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AdminRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=AdminRepository::class)
@@ -38,6 +37,8 @@ class Admin implements UserInterface
     private $created_at;
 
     public $confirm_password;
+
+    private $roles = [];
 
     public function getId(): ?int
     {
@@ -91,6 +92,10 @@ class Admin implements UserInterface
     }
 
     public function getRoles(){
-        return ['ROLE_ADMIN'];
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_ADMIN';
+
+        return array_unique($roles);
     }
 }

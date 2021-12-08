@@ -21,7 +21,6 @@ class PortfolioController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Project::class);
         $allProjects = $repo->findAll();
         return $this->render('portfolio/index.html.twig', [
-            'controller_name' => 'PortfolioController',
             'projets'         => $allProjects
         ]);
     }
@@ -31,6 +30,19 @@ class PortfolioController extends AbstractController
     public function home(){
         return $this->render('portfolio/home.html.twig');
     }
+
+    /**
+         * @Route("/portfolio/admin", name="portfolio_admin")
+         */
+        public function adminPanel(ProjectRepository $repo): Response
+        {
+            $repo = $this->getDoctrine()->getRepository(Project::class);
+            $allProjects = $repo->findAll();
+            
+            return $this->render('portfolio/admin.html.twig', [
+                'projets' => $allProjects
+            ]);
+        }
 
     /** 
     *@Route("/portfolio/new", name="portfolio_create")
@@ -52,7 +64,7 @@ class PortfolioController extends AbstractController
         //              ->add('weblink')
                      
         //              ->getForm();
-        
+
         $form = $this->createForm(ProjectType::class, $project);
 
         $form->handleRequest($request);
@@ -80,6 +92,8 @@ class PortfolioController extends AbstractController
             
         ]);
     }
+    
+    
     
     
 }
