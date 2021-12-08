@@ -7,6 +7,15 @@ body {
 
 }
 
+.btn-danger{
+    padding-top:0.3rem;
+    padding-bottom:0.3rem;
+}
+
+.fa-times{
+    font-size:1.5rem;
+}
+
 /* .size-input{
     width : 20rem;
 } */

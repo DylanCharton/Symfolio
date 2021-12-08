@@ -11,16 +11,16 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ProjectType;
 
-class PortfolioController extends AbstractController
+class ProjectController extends AbstractController
 {
     /**
-     * @Route("/portfolio", name="portfolio")
+     * @Route("/project", name="project")
      */
     public function index(ProjectRepository $repo): Response
     {
         $repo = $this->getDoctrine()->getRepository(Project::class);
         $allProjects = $repo->findAll();
-        return $this->render('portfolio/index.html.twig', [
+        return $this->render('project/index.html.twig', [
             'projets'         => $allProjects
         ]);
     }
@@ -28,25 +28,25 @@ class PortfolioController extends AbstractController
      * @Route("/", name="home")
      */
     public function home(){
-        return $this->render('portfolio/home.html.twig');
+        return $this->render('project/home.html.twig');
     }
 
     /**
-         * @Route("/portfolio/admin", name="portfolio_admin")
-         */
-        public function adminPanel(ProjectRepository $repo): Response
-        {
-            $repo = $this->getDoctrine()->getRepository(Project::class);
-            $allProjects = $repo->findAll();
-            
-            return $this->render('portfolio/admin.html.twig', [
-                'projets' => $allProjects
-            ]);
-        }
+     * @Route("/project/admin", name="project_admin")
+     */
+    public function adminPanel(ProjectRepository $repo): Response
+    {
+        $repo = $this->getDoctrine()->getRepository(Project::class);
+        $allProjects = $repo->findAll();
+        
+        return $this->render('project/admin.html.twig', [
+            'projets' => $allProjects
+        ]);
+    }
 
     /** 
-    *@Route("/portfolio/new", name="portfolio_create")
-    *@Route("/portfolio/{id}/edit", name="portfolio_edit")
+    *@Route("/project/new", name="project_create")
+    *@Route("/project/edit/{id}", name="project_edit")
     */
     public function form(Project $project = null, Request $request, ManagerRegistry $doctrine){
         $manager = $doctrine->getManager();
@@ -56,14 +56,6 @@ class PortfolioController extends AbstractController
 
         }
 
-        // $form = $this->createFormBuilder($project)
-        //              ->add('title')
-        //              ->add('description')
-        //              ->add('image')
-        //              ->add('github')
-        //              ->add('weblink')
-                     
-        //              ->getForm();
 
         $form = $this->createForm(ProjectType::class, $project);
 
@@ -73,27 +65,36 @@ class PortfolioController extends AbstractController
             $manager->persist($project);
             $manager->flush();
 
-            return $this->redirectToRoute('portfolio_show', ['id' => $project->getId()]);
+            return $this->redirectToRoute('project_show', ['id' => $project->getId()]);
         }
-        return $this->render('portfolio/create.html.twig',[
+        return $this->render('project/create.html.twig',[
             'formProject' => $form->createView(),
             'editMode'    => $project->getId() !== null
         ]);
     }
 
     /**
-     * @Route("/portfolio/{id}", name="portfolio_show")
+     * @Route("/project/{id}", name="project_show")
      */
     public function show(Project $projet){
         
         
-        return $this->render("portfolio/show.html.twig",[
+        return $this->render("project/show.html.twig",[
             'projet'   => $projet,
             
         ]);
     }
     
-    
-    
-    
+    /**
+     * @Route("/project/delete/{id}", name="project_delete")
+     */
+    public function delete(Project $project, ManagerRegistry $doctrine)
+    {
+        $manager = $doctrine->getManager();
+        $manager->remove($project);
+        $manager->flush();
+
+        return $this->redirectToRoute('project_admin');
+
+    }
 }

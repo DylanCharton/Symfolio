@@ -36,7 +36,8 @@ class Project
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url(
      * message = "L'URL saisie est invalide",
-     * relativeProtocol = true)
+     * relativeProtocol = true
+     * )
      */
     private $image;
 
