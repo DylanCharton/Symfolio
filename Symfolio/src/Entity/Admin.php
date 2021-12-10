@@ -98,4 +98,8 @@ class Admin implements UserInterface
 
         return array_unique($roles);
     }
+
+    public function getUserIdentifier(){
+        
+    }
 }

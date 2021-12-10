@@ -25,6 +25,32 @@ body {
     height:2.1rem;
 }
 
-/* .size-input{
-    width : 20rem;
-} */
+.thumbnail-admin{
+    height: 10rem;
+    
+}
+.thumbnail{
+    filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.431));
+}
+
+.project-row:nth-child(even) > .content-wrapper {
+    order:1;
+    
+}
+.project-row:nth-child(even) > .img-wrapper {
+    order:2;
+    
+}
+.category-chips{
+    background-color: #e1ad01;
+    border-radius: 1rem;
+    padding : 1rem;
+    padding-top : 0.5rem;
+    padding-bottom : 0.5rem;
+    color: #fff;
+    font-size : 0.6rem;
+}
+
+.row>*{
+    padding:0;
+}

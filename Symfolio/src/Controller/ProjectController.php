@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Entity\Category;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,8 +49,8 @@ class ProjectController extends AbstractController
     *@Route("/project/new", name="project_create")
     *@Route("/project/edit/{id}", name="project_edit")
     */
-    public function form(Project $project = null, Request $request, ManagerRegistry $doctrine){
-        $manager = $doctrine->getManager();
+    public function form(Project $project = null, Request $request, EntityManagerInterface $manager){
+        
         
         if(!$project){
             $project = new Project();
@@ -109,9 +108,9 @@ class ProjectController extends AbstractController
     /**
      * @Route("/project/delete/{id}", name="project_delete")
      */
-    public function delete(Project $project, ManagerRegistry $doctrine)
+    public function delete(Project $project, EntityManagerInterface $manager)
     {
-        $manager = $doctrine->getManager();
+    
         $manager->remove($project);
         $manager->flush();
 
