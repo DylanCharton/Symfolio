@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Repository\ProjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Category;
 use App\Form\ProjectType;
+use App\Repository\ProjectRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class ProjectController extends AbstractController
 {
@@ -62,6 +64,25 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
+            $image = $project->getImage();
+            $mockup = $project->getMockup();
+            $fileNameMockup = md5(uniqid()).'.'.$mockup->guessExtension();
+            $fileNameImg = md5(uniqid()).'.'.$image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fileNameImg
+                );
+                $mockup->move(
+                    $this->getParameter('images_directory'),
+                    $fileNameMockup
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $project->setImage($fileNameImg);
+            $project->setMockup($fileNameMockup);
             $manager->persist($project);
             $manager->flush();
 
