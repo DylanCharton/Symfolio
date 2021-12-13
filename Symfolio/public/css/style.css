@@ -2,23 +2,37 @@ body {
     background-repeat: no-repeat;
 }
 
-.container{
+.container {
     margin-top : 7rem;
 
 }
 
-.btn-danger{
-    padding-top:0.3rem;
+/* .show-container{
+    padding-top : 7rem!important;
+} */
+
+.show-left{
+    border-right : rgb(71, 71, 71) solid 2px;
+    height:100vh;
+    background-color:#e1ad01
+}
+
+.btn-outline-danger{
+    padding-top:0.2rem;
     padding-bottom:0.3rem;
 }
-.btn-warning{
-    padding-top:0.3rem;
+.btn-outline-warning{
+    padding-top:0.1rem;
     padding-bottom:0.3rem; 
     padding-left: 1.175rem;
     padding-right: 1.175rem;
 }
 
-.fa-times, .fa-edit{
+.btn-outline-warning:hover{
+    color:white;
+}
+
+.fa-times, .fa-edit, .fa-github, .fa-plus{
     font-size:1.5rem;
 }
 .action-btn{
@@ -49,6 +63,7 @@ body {
     padding-bottom : 0.5rem;
     color: #fff;
     font-size : 0.6rem;
+    width: fit-content;
 }
 
 .row>*{

@@ -4,7 +4,9 @@
 
     {% if not app.user %}
 
-        <h1 class="text-center mb-5">Connexion à l'interface d'administration</h1>
+        <header class="container">
+            <h1 class="text-center mb-5">Connexion à l'interface d'administration</h1>        
+        </header>
 
         <section class="d-flex justify-content-center">
             <form action="{{path('security_login')}}" method="POST" class="col-6">
@@ -23,7 +25,9 @@
         </section>
 
     {% else %}
-        <h1 class="text-center mb-5 alert alert-danger">Vous êtes déjà connecté, veuillez vous déconnecter.</h1>
+        <header class="container">
+            <h1 class="text-center mb-5 alert alert-danger">Vous êtes déjà connecté, veuillez vous déconnecter.</h1>
+        </header>
         <section class="d-flex justify-content-center">
             <form action="{{path('security_login')}}" method="POST" class="col-6">
                 <div class="d-flex flex-column mb-3">

@@ -4,24 +4,26 @@
 
 {% block body %}
 
-    <h1>{% if editMode %}Modifier le projet {% else %} Création de projet {% endif %}</h1>
+    <section class="container">
+        <h1>{% if editMode %}Modifier le projet {% else %} Création de projet {% endif %}</h1>
 
-    {{ form_start(formProject) }}
+        {{ form_start(formProject) }}
+        
+        {{ form_row(formProject.title, {'attr' : {'placeholder' : 'Titre du projet'}, 'label' : 'Titre'}) }}
+        {{ form_row(formProject.category, {'label' : 'Catégorie'}) }}
+        {{ form_row(formProject.description, {'attr' : {'placeholder' : 'Description du projet'}}) }}
+        {{ form_row(formProject.image, {'label' : 'Image'}) }}
+        <span>Image du mockup du site Techsini.</span>
+        {{ form_row(formProject.mockup, {'label' : 'Mockup'}) }}
+        <span>Mockup de place.it à utiliser en guise de thumbnail.</span>
+        {{ form_row(formProject.github, {'attr' : {'placeholder' : 'Lien du repository'}}) }}
+        {{ form_row(formProject.weblink, {'attr' : {'placeholder' : 'Lien du projet'}}) }}
     
-    {{ form_row(formProject.title, {'attr' : {'placeholder' : 'Titre du projet'}, 'label' : 'Titre'}) }}
-    {{ form_row(formProject.category, {'label' : 'Catégorie'}) }}
-    {{ form_row(formProject.description, {'attr' : {'placeholder' : 'Description du projet'}}) }}
-    {{ form_row(formProject.image, {'label' : 'Image'}) }}
-    <span>Image du mockup du site Techsini.</span>
-    {{ form_row(formProject.mockup, {'label' : 'Mockup'}) }}
-    <span>Mockup de place.it à utiliser en guise de thumbnail.</span>
-    {{ form_row(formProject.github, {'attr' : {'placeholder' : 'Lien du repository'}}) }}
-    {{ form_row(formProject.weblink, {'attr' : {'placeholder' : 'Lien du projet'}}) }}
-   
-    
+        
 
-    <input type="submit" name="add-project" class="btn btn-success mt-3" value="{% if editMode %}Modifier{% else %}Ajouter le projet{% endif %}">
+        <input type="submit" name="add-project" class="btn btn-success mt-3" value="{% if editMode %}Modifier{% else %}Ajouter le projet{% endif %}">
 
-    {{ form_end(formProject) }}
+        {{ form_end(formProject) }}
+    </section>
 
 {% endblock %}

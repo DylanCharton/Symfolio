@@ -1,15 +1,26 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div>
-    <h2>{{ projet.title }}</h2>
-    <div class="metadata">Catégorie : {{ projet.category.title }}</div>
-    <div class="content">
-        <img src="{{ asset('uploads/' ~ projet.image)}}" alt="">
-        {{projet.description | raw}}
-            
-            
+<section>
+    
+    <div class="container-fluid p-0 ">
+        <div class="row">
+            <div class="col-5 show-left show-container d-flex align-items-center">
+                <img class="img-fluid" src="{{ asset('uploads/' ~ projet.image)}}" alt="">
+            </div>
+            <div class="col-7 show-container d-flex flex-column justify-content-center px-4">
+                <h2 class="text-center"> <span class="category-chips">{{ projet.category.title | upper }}</span> {{ projet.title }}</h2>
+                
+                <p>{{projet.description | raw}}</p>
+                <div class="d-flex justify-content-around align-items-center">
+                    
+                    <a href="{{ projet.weblink }}" rel="noopener" target="_blank" class="btn btn-primary">Voir le projet</a>
+                    <a href="{{ projet.github }}" rel="noopener" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i></a>
+                </div>
 
+                
+            </div>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}

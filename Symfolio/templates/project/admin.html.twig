@@ -2,57 +2,56 @@
 
 {% block body %}
 
-        <h1 class="text-center"> {{app.user.username}}, voici vos projets</h1>
+<div class="container">
+  <h1 class="text-center"> {{app.user.username}}, voici vos projets</h1>
 
-    <div class="d-flex justify-content-end">
-        <a class="btn btn-primary mb-4" href="{{path('project_create')}}">Ajouter un projet</a>
-    </div>
-    <hr>
-
-<section>
-    
-    <div>
-        {% for projet in projets %}
-        <div class="d-flex row">
-            <div class="col-1">
-                <button type="button" class="btn btn-danger action-btn mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-times"></i></button>
-                <a class="action-btn btn btn-warning" href="{{path('project_edit', {'id': projet.id })}}"><i class="fas fa-edit"></i></a>
-                
-            </div>
-            <div class="col-5">
-                <img src="{{ asset('uploads/' ~ projet.mockup)}}" alt="Illustration" class="img-fluid thumbnail-admin">
-            </div>
-            
-            <div class="d-flex flex-column align-items-end col-6">
-                <h2>{{projet.title}}</h2>
-                
-                {# Le lien du projet serait plutôt dans le projet lui-même #}
-                {# <a href="{{projet.weblink}}">Lien du projet</a> #}
-                <div class="content">
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-primary mb-4" href="{{path('project_create')}}"><i class="fas fa-plus"></i></a>
+  </div>
+  <hr>
 
 
-                    <a href="{{ path( 'project_show', {'id': projet.id} )}}" class="btn btn-primary">Voir plus</a>
-                </div>
-            </div>
+  <section>
+      
+      <div>
+          {% for projet in projets %}
+          <div class="d-flex row">
+              <div class="col-1 d-flex flex-column justify-content-center px-2">
+                  <button type="button" class="btn btn-outline-danger action-btn mb-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fas fa-times"></i></button>
+                    <a class="action-btn btn btn-outline-warning" href="{{path('project_edit', {'id': projet.id })}}"><i class="fas fa-edit"></i></a>
+              </div>
+              <div class="col-3">
+                  <img src="{{ asset('uploads/' ~ projet.mockup)}}" alt="Illustration" class="img-fluid thumbnail-admin">
+              </div>
+              
+              <div class=" d-flex align-items-center col-7">
+                      <h3 class="ps-2">{{projet.title}}</h3>
+              </div>
+              <div class="col-1 d-flex align-items-center">
+                <a href="{{ path( 'project_show', {'id': projet.id} )}}" class="btn btn-outline-primary"><i class="fas fa-arrow-right"></i></a>
+              </div>
+              
+          </div>
+          <hr>
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Voulez-vous vraiment supprimer {{ projet.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <hr>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Voulez-vous vraiment supprimer {{ projet.title }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">J'ai missclick</button>
-        <a href="{{ path('project_delete', {'id' : projet.id })}}" type="button" class="btn btn-primary">Oui.</a>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">J'ai missclick</button>
+          <a href="{{ path('project_delete', {'id' : projet.id })}}" type="button" class="btn btn-primary">Oui.</a>
+        </div>
       </div>
     </div>
   </div>
+          {% endfor %}
+      </div>
+  </section>
+
 </div>
-        {% endfor %}
-    </div>
-</section>
 
 <!-- Modal -->
 
