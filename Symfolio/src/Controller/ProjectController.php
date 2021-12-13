@@ -15,6 +15,13 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class ProjectController extends AbstractController
 {
     /**
+     * @Route("/", name="home")
+     */
+    public function home(){
+        return $this->render('project/home.html.twig');
+    }
+    
+    /**
      * @Route("/project", name="project")
      */
     public function index(ProjectRepository $repo): Response
@@ -25,12 +32,7 @@ class ProjectController extends AbstractController
             'projets'         => $allProjects
         ]);
     }
-    /**
-     * @Route("/", name="home")
-     */
-    public function home(){
-        return $this->render('project/home.html.twig');
-    }
+    
 
     /**
      * @Route("/project/admin", name="project_admin")
@@ -94,6 +96,19 @@ class ProjectController extends AbstractController
     }
 
     /**
+         * @Route("/project/delete/{id}", name="project_delete")
+         */
+        public function delete(Project $project, EntityManagerInterface $manager)
+        {
+        
+            $manager->remove($project);
+            $manager->flush();
+
+            return $this->redirectToRoute('project_admin');
+
+        }
+
+    /**
      * @Route("/project/{id}", name="project_show")
      */
     public function show(Project $projet){
@@ -105,16 +120,5 @@ class ProjectController extends AbstractController
         ]);
     }
     
-    /**
-     * @Route("/project/delete/{id}", name="project_delete")
-     */
-    public function delete(Project $project, EntityManagerInterface $manager)
-    {
     
-        $manager->remove($project);
-        $manager->flush();
-
-        return $this->redirectToRoute('project_admin');
-
-    }
 }
